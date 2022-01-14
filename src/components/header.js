@@ -4,7 +4,7 @@ const Header = {
         
        
         <div class="logo bg-blue-900">
-        <img class="mx-auto py-4" src="../src/img/logo-trang.png" alt="">
+        <img class="mx-auto py-4" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/FPT_Polytechnic.png/120px-FPT_Polytechnic.png" alt="">
       </div>
       <div class="menu grid grid-cols-12 bg-yellow-600">
         <nav class="col-span-6 py-2  mx-auto">
@@ -27,7 +27,7 @@ const Header = {
         </div>
       </div>
       <div class="banner">
-        <img src="../src/img/banner.png" alt="" width="100%">
+        <img src="https://caodang.fpt.edu.vn/wp-content/uploads/Banner1-1.png" alt="" width="100%">
       </div>
       </header>`;
     },
