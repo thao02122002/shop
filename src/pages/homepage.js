@@ -1,9 +1,13 @@
 import News from "../components/new";
 import News2 from "../components/new2";
+import Header from "../components/header";
+import Footer from "../components/footer";
 
 const HomePage = {
     render() {
-        return ` <h1 class="pb-8"><strong>TIN TỨC HỌC TẬP</strong></h1>
+        return `
+        ${Header.render()}
+         <h1 class="pb-8"><strong>TIN TỨC HỌC TẬP</strong></h1>
         <div class="product1 grid grid-cols-12 gap-3">
           ${News.render()}
           
@@ -12,7 +16,8 @@ const HomePage = {
         <div class="product2 grid grid-cols-12 gap-3">
           
           ${News2.render()}
-        </div>`;
+        </div>
+        ${Footer.render()}`;
     },
 };
 export default HomePage;
