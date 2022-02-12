@@ -1,4 +1,6 @@
+import toastr from "toastr";
 import { signin } from "../api/user";
+import "toastr/build/toastr.min.css";
 
 const SingIn = {
     render() {
@@ -63,16 +65,23 @@ const SingIn = {
         const formSingin = document.querySelector("#formSingin");
         formSingin.addEventListener("submit", async (e) => {
             e.preventDefault();
-            const { data } = await signin({
-                email: document.querySelector("#email").value,
-                password: document.querySelector("#password").value,
+            try {
+                const { data } = await signin({
+                    email: document.querySelector("#email").value,
+                    password: document.querySelector("#password").value,
                 // username: document.querySelector("#username").value,
-            });
-            localStorage.setItem("user", JSON.stringify(data.user));
-            if (data.user.id === 8) {
-                document.location.href = "/admin/dashboard";
-            } else {
-                document.location.href = "/";
+                });
+                localStorage.setItem("user", JSON.stringify(data.user));
+                toastr.success("Bạn đã đăng nhập thành công, chào mừng bạn đến với website");
+                setTimeout(() => {
+                    if (data.user.id === 8) {
+                        document.location.href = "/admin/dashboard";
+                    } else {
+                        document.location.href = "/";
+                    }
+                }, 3000);
+            } catch (error) {
+                toastr.error(error.response.data);
             }
         });
     },
