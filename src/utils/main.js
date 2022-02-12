@@ -1,53 +1,82 @@
+/* eslint-disable no-unused-vars */
 import Navigo from "navigo";
-// import Footer from "../components/footer";
-// import Header from "../components/header";
+
 import HomePage from "../pages/homepage";
 import DetailPage from "../pages/detail";
 import ProductPage from "../pages/productpage";
-import SingIn from "../pages/singin";
-import SingUp from "../pages/singup";
-import AdminHome from "../pages/admin/new/adminHomePage";
-import detailHome from "../pages/admin/new/detailHome";
+import SingIn from "../pages/signin";
+import SingUp from "../pages/signup";
+import AdminHome from "../pages/admin/new";
+import detailHome from "../pages/admin/new/edit";
 import addHome from "../pages/admin/new/add";
 
-const router = new Navigo("/", { linksSelector: "a" });
-const print = (content) => {
+const router = new Navigo("/", { linksSelector: "a", hash: true });
+const print = async (content, id) => {
     // document.querySelector("#header").innerHTML = Header.render();
-    document.querySelector("#app").innerHTML = content;
-    // document.querySelector("#footer").innerHTML = Footer.render();
-    // document.querySelector("#singin").innerHTML = SingIn.render();
-    // document.querySelector("#singup").innerHTML = SingUp.render();
+    document.querySelector("#app").innerHTML = await content.render(id);
+    if (content.afterRender) content.afterRender();
 };
 
+router.on("/#/admin/*/", () => {}, {
+    before(done, match) {
+        const userId = JSON.parse(localStorage.getItem("user")).user.id;
+        console.log(userId);
+        if (userId === 8) {
+            done();
+        } else {
+            document.location.href = "/";
+        }
+    },
+});
 router.on({
     "/": () => {
-        print(HomePage.render());
+        print(HomePage);
     },
     "/about": () => {
         print("About Page");
     },
     "/product": () => {
-        print(ProductPage.render());
+        print(ProductPage);
     },
     "/product/:id": ({ data }) => {
-        const { id } = data;
-        print(DetailPage.render(+id));
+        print(DetailPage, data.id);
     },
-    "/singin": () => {
-        print(SingIn.render());
+    "/signin": () => {
+        print(SingIn);
     },
-    "/singup": () => {
-        print(SingUp.render());
+    "/signup": () => {
+        print(SingUp);
     },
     "/admin/dashboard": () => {
-        print(AdminHome.render());
+        print(AdminHome);
     },
     "/admin/news/:id/edit": ({ data }) => {
-        const { id } = data;
-        print(detailHome.render(+id));
+        print(detailHome, data.id);
     },
     "/admin/news/add": () => {
-        print(addHome.render());
+        print(addHome);
     },
 });
 router.resolve();
+
+// const API = "https://5e79b4b817314d00161333da.mockapi.io/posts";
+// fetch(API)
+//    .then((response) => response.json());
+//    .then((data) => console.log(data));
+
+// const getProduct = () => new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//         try {
+//             resolve([1, 2, 3, 4]);
+//         } catch (error) {
+//             reject("Ket noi k thanh cong");
+//         }
+//     }, 3000);
+// });
+
+// const showProduct = async () => {
+//     const result = await getProduct();
+//     const data = await [...result, 5];
+//     console.log(data);
+// };
+// showProduct;

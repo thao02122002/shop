@@ -15,6 +15,7 @@ const Header = {
         <li class="inline-block pr-8 text-white hover:text-blue-800"><a href="">Góc sinh viên</a></li>
         <li class="inline-block pr-8 text-white hover:text-blue-800"><a href="">Tuyển dụng</a></li>
         <li class="inline-block pr-8 text-white hover:text-blue-800"><a href="/admin/dashboard">Admin</a></li>
+        <li class="inline-block pr-2 text-white hover:text-blue-800"><a id="account" href="">User</a></li>
       </ul>
         </nav>
         <div class="search col-span-3 py-2 pl-8">
@@ -22,8 +23,8 @@ const Header = {
           <button class="border border-black bg-blue-900 text-white p-1" type="submit">Tìm kiếm</button>
         </div>
         <div class="col-span-3 my-auto">
-        <a href="/singin"><input type="submit" class="border border-black bg-white p-1 hover:bg-blue-900 hover:text-white" value="Sing In" id="singin"></a>
-        <a href="/singup"><input type="submit" class="border border-black bg-white p-1 hover:bg-blue-900 hover:text-white" value="Sing Up" id="singup"></a>
+        <a href="/signin"><input type="submit" class="border border-black bg-white p-1 hover:bg-blue-900 hover:text-white" value="Sing In" id="singin"></a>
+        <a href="/signup"><input type="submit" class="border border-black bg-white p-1 hover:bg-blue-900 hover:text-white" value="Sing Up" id="singup"></a>
         </div>
       </div>
       <div class="banner">
@@ -31,5 +32,10 @@ const Header = {
       </div>
       </header>`;
     },
+    afterRender() {
+        const user = JSON.parse(localStorage.getItem("user"));
+        document.querySelector("#account").innerHTML = user.email;
+    },
+
 };
 export default Header;
