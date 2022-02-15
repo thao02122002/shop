@@ -4,7 +4,7 @@ import "toastr/build/toastr.min.css";
 
 const Header = {
     render() {
-        return `<header id="header">
+        return /* html */ `<header id="header">
         
        
         <div class="logo bg-blue-900">
@@ -17,7 +17,8 @@ const Header = {
         <li class="inline-block pr-4 text-white hover:text-blue-800"><a href="/about">Tuyển sinh</a></li>
         
         <li class="inline-block pr-4 text-white hover:text-blue-800"><a href="/admin/dashboard">Admin</a></li>
-        <li class="inline-block pr-2 text-white hover:text-blue-800"><a id="account" href="">User</a></li>
+        ${localStorage.getItem("user") ? `<li class="inline-block pr-2 text-white hover:text-blue-800"><a id="account" href="">User</a></li>` : ""}
+        
       </ul>
         </nav>
         <div class="search col-span-3 py-2 pl-8">
@@ -25,9 +26,11 @@ const Header = {
           <button class="border border-black bg-blue-900 text-white p-1" type="submit">Tìm kiếm</button>
         </div>
         <div class="col-span-3 my-auto">
-        <a href="/signin"><input type="submit" class="border border-black bg-white p-1 hover:bg-blue-900 hover:text-white" value="Sing In" id="singin"></a>
-        <a href="/signup"><input type="submit" class="border border-black bg-white p-1 hover:bg-blue-900 hover:text-white" value="Sing Up" id="singup"></a>
-         <a href=""><input type="submit" class="border border-black bg-white p-1 hover:bg-blue-900 hover:text-white" value="Logout" id="logout"></a>
+        ${localStorage.getItem("user") ? `` : `<a href="/signin"><input type="submit" class="border border-black bg-white p-1 hover:bg-blue-900 hover:text-white" value="Sing In" id="singin"></a>
+        <a href="/signup"><input type="submit" class="border border-black bg-white p-1 hover:bg-blue-900 hover:text-white" value="Sing Up" id="singup"></a>`}
+        
+        ${localStorage.getItem("user") ? `<a href=""><input type="submit" class="border border-black bg-white p-1 hover:bg-blue-900 hover:text-white" value="Logout" id="logout"></a>` : ""}
+        
         </div>
       </div>
       <div class="banner">
@@ -40,11 +43,13 @@ const Header = {
         const logout = document.querySelector("#logout");
         document.querySelector("#account").innerHTML = user.email;
         // logout
-        logout.addEventListener("click", () => {
-            toastr.success("Bạn đã logout thành công");
-            localStorage.removeItem("user");
-            reRender(Header, "#header");
-        });
+        if (logout) {
+            logout.addEventListener("click", () => {
+                toastr.success("Bạn đã logout thành công");
+                localStorage.removeItem("user");
+                reRender(Header, "#header");
+            });
+        }
     },
 
 };
